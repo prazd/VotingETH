@@ -1,39 +1,55 @@
 pragma solidity ^0.4.22;
 //Vote
 //8 - max
+
 contract Vote {
     
     mapping(uint8 => address) voters; //Список голосующих
     mapping(uint8 => bool) sentence; // Голоса
     uint8 sent_counter = 0; // Счетчик голосов
-    int i; //Счетчик для цикла
+
     
-    function voting(bool _sent){
+    
+    function voting(bool _sent){ //Отдать голос
+       require(sent_counter < 8);
         sentence[sent_counter] = _sent;
         voters[sent_counter] = msg.sender;
-        sent_counter += 1;
+        sent_counter++;
     } 
     
-    function check_vote() constant returns(bool){ // Проверка количества проголосовавших
-        if (sent_counter >= 8){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-    function sent_value() returns(uint8){
+    function sent_value() constant returns(uint8){ // Количество голосов
         return sent_counter;
     }
     
-    function voters_value(uint8 _i) returns(address){
-        return voters[_i];
+    function voters_value(uint8 _i) view returns(address){ // Проголосовавшие
+        int i;
+        for(i = 0; i < sent_counter;i++){
+            return voters[_i];
+        }
     }
     
-    function null_count() private{
+    function null_count() constant { // Завершение голосования
         sent_counter = 0;
     }
-
+    
+    function count_of_vote() view returns(string){ //Подсчет голосов
+        uint8 loose;
+        uint8 win;
+        uint8 i;
+        for(i = 0;i<8;i++){
+            if(sentence[i] == true){
+                loose++;
+            }
+            else if(sentence[i] == false){
+                win++;
+            }
+            
+            if(loose>win){
+                return 'Виновен';
+            }
+            else{
+                return 'Невиновен';
+            }
+        }
+    }
 }
