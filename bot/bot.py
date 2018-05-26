@@ -7,6 +7,7 @@ bot = telebot.TeleBot('451678818:AAHZvN_Yh5uph4T69JvvDzGQw8mX8h5YA5U')
 contract_abi = [
 	{
 		"constant": True,
+		"inputs": [],
 		"name": "count_of_vote",
 		"outputs": [
 			{
@@ -80,7 +81,6 @@ contract_abi = [
 		"type": "function"
 	}
 ]
-
 #Web3(localhost - ganache)
 web = web3.Web3(web3.Web3.HTTPProvider('http://127.0.0.1:8545'))
 #Смарт контракт
