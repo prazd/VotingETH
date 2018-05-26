@@ -1,5 +1,5 @@
 # ethereum
-for training
+for training\n
 Голосование в суде(виновен/невиновен)
 
 Вадим - IOT
