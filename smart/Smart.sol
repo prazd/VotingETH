@@ -32,24 +32,50 @@ contract Vote {
         sent_counter = 0;
     }
     
-    function count_of_vote() view returns(string){             //Подсчет голосов
-        uint8 loose;
-        uint8 win;
-        for(uint8 i = 0;i<8;i++){
-            if(sentence[i] == false){
-                loose++;
-            }
-            else if(sentence[i] == true){
-                win++;
-            }
-            
-            if(loose>win){
-                return 'Виновен';
-            }
-            else{
-                return 'Невиновен';
-            }
-        }
-    }
+
     
+    function count_of_vote() view returns(string){             //Подсчет голосов
+        if(sent_counter == 8){
+           
+           uint8 loose;
+           uint8 win;
+           
+           for(uint8 i = 0;i<8;i++){   
+               if(sentence[i] == false){
+                  loose++;
+               }
+               else if(sentence[i] == true){
+                    win++;
+               }
+            
+               if(loose>win){
+                    return 'Виновен';
+               }
+               else{
+                    return 'Невиновен';
+         }
+         }
+         }
+         
+        else{
+             
+             uint8 now_loose;
+             uint8 now_win;
+             
+             for(uint8 now_i=0;i<sent_counter;i++){
+                 if(sentence[now_i] == false){
+                     now_loose++;
+                 }
+                 else if(sentence[now_i] == true){
+                     now_win++;
+                 }
+                 }
+                 if(now_loose > now_win){
+                     return 'Пока большинство за то, что виновен';
+                 }
+                 else{
+                     return 'Пока большинство за то, что невиновен';
+                 }
+         }
+     }
 }
