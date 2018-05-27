@@ -6,9 +6,9 @@ contract Vote {
     mapping(uint8 => bool) sentence; // Голоса
     uint8 sent_counter = 0; // Счетчик голосов
     
-    function voting(bool _sent) public returns(string) { //Отдать голос
+    function voting(bool _sent) public returns(string) {         //Отдать голос
         require(sent_counter < 8);
-        for(uint8 cou_acc = 0;cou_acc<sent_counter;cou_acc++){ //Проверка, на наличие аккаунта в словаре для проголосовавших
+        for(uint8 cou_acc = 0;cou_acc<sent_counter;cou_acc++){   //Проверка, на наличие аккаунта в словаре для проголосовавших
             if(voters[cou_acc] == msg.sender){
                 return "You have already voted ";
             }
@@ -23,18 +23,19 @@ contract Vote {
     }
     
     function voters_value(uint8 _i) view returns(address){     // Проголосовавшие по 1
-        for(int i = 0; i < sent_counter;i++){
             return voters[_i];
-        }
+
+    }
+    
+    function vote(uint8 _v) view returns(bool){               // Голоса
+            return sentence[_v];
     }
     
     function null_count()  {                                   // Завершение голосования
         sent_counter = 0;
     }
     
-
-    
-    function count_of_vote() view returns(string){             //Подсчет голосов
+    function count_of_vote() view returns(string){             // Подсчет голосов
         if(sent_counter == 8){
            
            uint8 loose;
