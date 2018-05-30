@@ -1,9 +1,13 @@
 var express = require('express');
+
 var app = express();
-app.get('/',function(req,res){
-	res.send('Home');
-})
+app.set('view engine', 'ejs');//шаблонизатор
+
+app.get('/',function(req, res){ //request , response
+	res.sendFile(__dirname + "/1.html");
+});
+
 app.get('/:id', function(req,res){
-	res.send('id-'+req.params.id);
+	res.render('a', {newsId:req.params.id});
 });
 app.listen(80)
