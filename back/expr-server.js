@@ -1,13 +1,14 @@
 var express = require('express');
-
+var path = require('path')
 var app = express();
-app.set('view engine', 'ejs');//шаблонизатор
 
-app.get('/',function(req, res){ //request , response
-	res.sendFile(__dirname + "/1.html");
+app.use(express.static(path.join('/home/prazd/ethereum/front','css')))
+app.get('/',function(req, res){ 
+	res.sendFile('/home/prazd/ethereum/front/new.html');
 });
 
-app.get('/:id', function(req,res){
-	res.render('a', {newsId:req.params.id});
-});
+//app.get('/:id', function(req,res){
+//	res.render('a', {newsId:req.params.id});
+//});
+//
 app.listen(80)
