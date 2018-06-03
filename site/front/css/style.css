@@ -3,6 +3,14 @@
 	padding: 0;
 }
 
+body{
+	background-color: rgba(100, 100, 100, .1);
+}
+
+p{
+	margin: 15px;
+}
+
 ul{
 	padding: 10px;
 	list-style-type: none;
@@ -31,7 +39,7 @@ ul{
 
 .links{
 	text-decoration: none;
-	color: rgb(100, 100, 100);
+	color: rgb(50, 50, 50);
 }
 
 .links_head{
@@ -48,10 +56,5 @@ ul{
 
 .reg{
 	margin: 15px;
-	padding: 15px;
-	margin-left: 300px;
-}
-
-#form1{
-	margin: 15px;
+	margin-left: 350px;
 }
