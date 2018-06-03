@@ -6,34 +6,6 @@ web = web3.Web3(web3.Web3.HTTPProvider('http://127.0.0.1:8545'))
 
 abi = [
 	{
-		"constant": False,
-		"inputs": [],
-		"name": "null_count",
-		"outputs": [],
-		"payable": False,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": False,
-		"inputs": [
-			{
-				"name": "_sent",
-				"type": "bool"
-			}
-		],
-		"name": "voting",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": False,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": True,
 		"inputs": [],
 		"name": "count_of_vote",
@@ -59,6 +31,15 @@ abi = [
 		],
 		"payable": False,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [],
+		"name": "null_count",
+		"outputs": [],
+		"payable": False,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -97,6 +78,25 @@ abi = [
 		],
 		"payable": False,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [
+			{
+				"name": "_sent",
+				"type": "bool"
+			}
+		],
+		"name": "voting",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": False,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
