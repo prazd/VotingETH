@@ -31,7 +31,7 @@ contract Vote {
             return sentence[_v];
     }
     
-    function null_count()  {                                   // Завершение голосования
+    function null_count(){                                   // Завершение голосования
         sent_counter = 0;
     }
     
@@ -41,41 +41,49 @@ contract Vote {
            uint8 loose;
            uint8 win;
            
-           for(uint8 i = 0;i<8;i++){   
+           for(uint8 i = 0; i < 8; i++){   
                if(sentence[i] == false){
                   loose++;
                }
                else if(sentence[i] == true){
                     win++;
                }
-            
-               if(loose>win){
+           }           
+           if(loose > win){
                     return 'Виновен';
                }
-               else{
+           else if(loose == win){
+                    return 'Равное количество голосов за и против'; 
+           }
+           
+           else{
                     return 'Невиновен';
          }
-         }
-         }
+    }
          
-        else{
+         
+        else {
              
              uint8 now_loose;
              uint8 now_win;
              
-             for(uint8 now_i=0;i<sent_counter;i++){
+             for(uint8 now_i = 0; now_i < sent_counter;now_i++){
                  if(sentence[now_i] == false){
                      now_loose++;
                  }
                  else if(sentence[now_i] == true){
                      now_win++;
                  }
+            }
+            
+            if(now_loose > now_win){
+                return 'Пока большинство за то, что виновен';
                  }
-                 if(now_loose > now_win){
-                     return 'Пока большинство за то, что виновен';
-                 }
-                 else{
-                     return 'Пока большинство за то, что невиновен';
+            else if(now_loose == now_win){
+                return 'Пока что равное количество голосов за и против';
+            }
+            else {
+               return 'Пока большинство за то, что невиновен';
                  }
          }
      }
