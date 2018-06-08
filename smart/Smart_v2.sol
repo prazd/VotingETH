@@ -1,4 +1,5 @@
 pragma solidity ^0.4.22;
+pragma experimental ABIEncoderV2;
 //Vote
 //8 - max
 contract Vote {
@@ -10,8 +11,7 @@ contract Vote {
     address[] adr_vot;                   // Адреса проголосовавших
     mapping(string => address[]) archive;      // Архив
     
-    function archive_info(string _info) view returns(address[]){  // Обратиться к архиву
-        // пока не возвращает
+     function archive_info(string _info) public view returns(address[]){  // Обратиться к архиву
         return archive[_info];
     }
     
@@ -54,8 +54,7 @@ contract Vote {
             return sentence[_v];
     }
     
-    function null_count() view {                                   // Завершение голосования
-        sent_counter = 0;
+    function null_count(){                                   // Завершение голосования
         archive[name_of_vote] = adr_vot;
     }
     
@@ -110,4 +109,6 @@ contract Vote {
                  }
          }
      }
+
 }
+
