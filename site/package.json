@@ -1,0 +1,11 @@
+{
+  "name": "ethereum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "sudo node app.js"
+  },
+  "author": "prazd",
+  "license": "ISC"
+}
