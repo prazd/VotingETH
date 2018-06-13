@@ -9,15 +9,19 @@ contract Vote {
     uint8 sent_counter;                  // Счетчик голосов
     string name_of_vote;                 // Имя дела
     address[] adr_vot;                   // Адреса проголосовавших
+    
     mapping(string => address[]) archive;      // Архив
     
      function archive_info(string _info) public view returns(address[]){  // Обратиться к архиву
         return archive[_info];
     }
     
-    function start_of_vote(string _sv){        // Начать голосование,назначить дело 
+    function start_of_vote1(string _sv){        // Начать голосование,назначить дело 
         name_of_vote = _sv;
-        sent_counter = 0;
+    }
+    
+    function start_of_vote2(){
+        sent_counter = 0;                         // Начать голосование, обнулить счетчик
     }
     
     function n_v() public constant returns(string){     // Узнать дело по которому ведется голосование
@@ -46,7 +50,7 @@ contract Vote {
 
     }
     
-    function full_voters_value() view returns(address[]){    // Проголосовавшие Список
+    function full_voters_value() view public returns(address[]){    // Проголосовавшие Список
             return adr_vot;
     }
     
@@ -54,9 +58,13 @@ contract Vote {
             return sentence[_v];
     }
     
-    function null_count(){                                   // Завершение голосования
+    function null_count1(){                                   // Завершение голосования(Запись в архив)
         archive[name_of_vote] = adr_vot;
     }
+    
+    //function null_count2(){
+     //   adr_vot.length = 0;                                  // Завершение голосования(очистка массива)
+    //}
     
     function count_of_vote() view returns(string){           // Подсчет голосов
         if(sent_counter == 8){
@@ -84,7 +92,6 @@ contract Vote {
          }
     }
          
-         
         else {
              
              uint8 now_loose;
@@ -106,7 +113,7 @@ contract Vote {
             }
             else {
                 return 'Пока большинство за то, что невиновен';
-                 }
+            }
          }
      }
 
