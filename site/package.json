@@ -7,5 +7,8 @@
     "start": "sudo node app.js"
   },
   "author": "prazd",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }

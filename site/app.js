@@ -23,6 +23,6 @@ app.get('/arch.html', (req, res) => {
 	res.sendFile(__dirname + '/front/arch.html');
 });
 app.get('/sing_in.html', (req, res) => {
-	res.sendFile(__dirname + '/front/sing_in.html');
+        res.sendFile(__dirname + '/front/auth/sing_in.html');
 });
 app.listen(80);
