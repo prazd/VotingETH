@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 var con = mysql.createConnection({
 	host:'localhost',
-	user:'prazd',
-	password:'19982468fktr',
+	user:'login',
+	password:'password',
 	database:'back'
 })
 
