@@ -1,0 +1,1 @@
+setTimeout("$('#img').get(0).style.color = 'green'", 2000)
