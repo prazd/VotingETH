@@ -8,6 +8,15 @@ app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(bodyParser.urlencoded({ extended: false }))
 
+var con = mysql.createConnection({
+	host:'localhost',
+	user:'prazd',
+	password:'19982468fktr',
+	database:'back'
+})
+
+con.connect(console.log('DB'))
+
 app.get('/',(req, res) => {
 	res.sendFile(__dirname + '/front/main_page.html');
 });
@@ -36,10 +45,11 @@ app.get('/sing_in.html', (req, res) => {
 		res.sendFile(__dirname + '/front/sing_in.html');
 });
 
-app.post('/reg',async (req,res) => {
-	await console.log(req.body.login)
+app.post('/reg',(req,res) => {
+	var sql = 'insert into id(name,passwd) values(\''+req.body.login+'\',\''+req.body.pass+'\')'
+    con.query(sql,(err,result) => {
+		if (err) throw err;
+		console.log('NICE');
+	});
 });
-
-
-
 app.listen(80);
