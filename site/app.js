@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path')
 const app = express();
+const mysql = require('mysql')
 const bodyParser = require('body-parser')
-
 
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
@@ -37,8 +37,9 @@ app.get('/sing_in.html', (req, res) => {
 });
 
 app.post('/reg',async (req,res) => {
-	await console.log(req.body)
+	await console.log(req.body.login)
 });
+
 
 
 app.listen(80);
