@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
 	host:'localhost',
 	user:'login',
-	password:'password',
+	password:'passwd',
 	database:'back'
 });
 
@@ -48,12 +48,26 @@ app.get('/sing_in.html', (req, res) => {
 });
 
 app.post('/reg',(req,res) => {
+	var checkName = 'select name from id;';
+	con.query(checkName,(err,result,fields) => {
+	var ch = result;
+	var l = 0;
+	for(var c=0; c < ch.length; c++){
+	        if(ch[c]['name'] == req.body.login){
+				   console.log('Уже есть');
+				   l+=1;
+				   break
+        	}
+	     }
+    if(l == 0){
 	var sql = 'insert into id(name,passwd) values(\''+req.body.login+'\',\''+req.body.pass+'\')'
     con.query(sql,(err,result) => {
 		if (err) throw err;
 		console.log('NICE');
-	});
-});
+	    });
+	    };
+	    });
+	    });
 
 app.post('/sign',(req,res) => {
 	var check = 'select * from id;'
@@ -61,7 +75,6 @@ app.post('/sign',(req,res) => {
 		var a = result;
 		for(var i=0;i < a.length; i++){
 			if(a[i]['name'] == req.body.login && a[i]['passwd'] == req.body.pass){
-				//res.send('YES');
 				console.log('YES');
 				break;
 			};
