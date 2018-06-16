@@ -1,19 +1,21 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const app = express();
-const mysql = require('mysql')
-const bodyParser = require('body-parser')
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
 
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static('front/jquery'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 var con = mysql.createConnection({
 	host:'localhost',
 	user:'login',
 	password:'password',
 	database:'back'
-})
+});
 
 con.connect(console.log('DB'))
 
@@ -52,4 +54,18 @@ app.post('/reg',(req,res) => {
 		console.log('NICE');
 	});
 });
+
+app.post('/sign',(req,res) => {
+	var check = 'select * from id;'
+	con.query(check,(err,result,fields) => {
+		var a = result;
+		for(var i=0;i < a.length; i++){
+			if(a[i]['name'] == req.body.login && a[i]['passwd'] == req.body.pass){
+				//res.send('YES');
+				console.log('YES');
+				break;
+			};
+			};
+			});
+		    });
 app.listen(80);

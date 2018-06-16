@@ -2,7 +2,7 @@ function call() {
 	var msg   = $('#formx').serialize();
 	    $.ajax({
 	    	type: 'POST',
-			url: '', // url страницы
+		    url: 'http://localhost/reg', // url страницы
 		    data: msg,
 		    success: function(data) {
 		        $('#results').html(data);
