@@ -6,9 +6,116 @@ web = web3.Web3(web3.Web3.HTTPProvider('http://127.0.0.1:8545'))
 
 abi = [
 	{
+		"constant": False,
+		"inputs": [],
+		"name": "null_count1",
+		"outputs": [],
+		"payable": False,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [],
+		"name": "null_count2",
+		"outputs": [],
+		"payable": False,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [
+			{
+				"name": "_sv",
+				"type": "string"
+			}
+		],
+		"name": "start_of_vote1",
+		"outputs": [],
+		"payable": False,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [],
+		"name": "start_of_vote2",
+		"outputs": [],
+		"payable": False,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": False,
+		"inputs": [
+			{
+				"name": "_sent",
+				"type": "bool"
+			}
+		],
+		"name": "voting",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": False,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": True,
+		"inputs": [
+			{
+				"name": "_info",
+				"type": "string"
+			}
+		],
+		"name": "archive_info",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": False,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"constant": True,
 		"inputs": [],
 		"name": "count_of_vote",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": False,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": True,
+		"inputs": [],
+		"name": "full_voters_value",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": False,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": True,
+		"inputs": [],
+		"name": "n_v",
 		"outputs": [
 			{
 				"name": "",
@@ -31,15 +138,6 @@ abi = [
 		],
 		"payable": False,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": False,
-		"inputs": [],
-		"name": "null_count",
-		"outputs": [],
-		"payable": False,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -78,25 +176,6 @@ abi = [
 		],
 		"payable": False,
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": False,
-		"inputs": [
-			{
-				"name": "_sent",
-				"type": "bool"
-			}
-		],
-		"name": "voting",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": False,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
