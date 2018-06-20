@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
 	host:'localhost',
 	user:'login',
-	password:'passwd',
+	password:'password',
 	database:'back'
 });
 
@@ -48,7 +48,7 @@ app.get('/sing_in.html', (req, res) => {
 });
 
 app.post('/reg',(req,res) => {
-	var checkName = 'select name from id;';
+	var checkName = 'select name from id;';	
 	con.query(checkName,(err,result,fields) => {
 	var ch = result;
 	var l = 0;
@@ -68,7 +68,6 @@ app.post('/reg',(req,res) => {
 	    };
 	    });
 	    });
-
 app.post('/sign',(req,res) => {
 	var check = 'select * from id;'
 	con.query(check,(err,result,fields) => {
@@ -80,5 +79,5 @@ app.post('/sign',(req,res) => {
 			};
 			};
 			});
-		    });
+			});
 app.listen(80);
