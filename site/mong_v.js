@@ -9,7 +9,7 @@ app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));//body-parser
 
 //connect to mongodb
 mongo.connect('mongodb://localhost/users',(err,db)=>{
@@ -70,6 +70,7 @@ app.post('/reg',(req,res) => {
 		}
 	});
 });
+
 app.post('/sign',(req,res) => {
 	var sign_query = user.findOne({login:req.body.login},(err,doc) =>{
 		if(err) throw err;
@@ -86,4 +87,5 @@ app.post('/sign',(req,res) => {
 		}
 		console.log(doc)
 });});
+
 app.listen(80);
