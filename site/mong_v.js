@@ -57,10 +57,9 @@ app.post('/reg',(req,res) => {
 		login:req.body.login,
 		password:req.body.pass
 	});
-	var query = user.findOne({login:req.body.login},(err,doc)=>{
+	var reg_query = user.findOne({login:req.body.login},(err,doc)=>{
 		if(err) throw err;
-		var o = doc;
-		console.log("find = "+o);
+
 		if(doc === null){
 			lp.save();
 			res.sendFile(__dirname + '/front/in_db.html');
@@ -70,5 +69,20 @@ app.post('/reg',(req,res) => {
 		}
 	});
 });
-app.post('/sign',(req,res) => {});/*!!!!!!!!!!!!!!!! */
+app.post('/sign',(req,res) => {
+	var sign_query = user.findOne({login:req.body.login},(err,doc) =>{
+		if(err) throw err;
+		if(doc === null){
+			res.sendFile(__dirname + '/front/no_user.html')
+		}
+		else{
+			if(+doc['password'] == +req.body.pass){
+			res.sendFile(__dirname + '/front/hello.html')
+			}
+			else{
+				res.sendFile(__dirname + '/front/badpass.html')
+			}
+		}
+		console.log(doc)
+});});
 app.listen(80);
