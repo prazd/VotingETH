@@ -4,6 +4,7 @@ const app = express();
 const mongo = require('mongoose');
 const bodyParser = require('body-parser');
 
+app.set('view engine','ejs')
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
@@ -41,7 +42,7 @@ app.get('/dela.html', (req, res) => {
 });
 
 app.get('/reg.html', (req, res) => {
-	res.sendFile(__dirname + '/front/reg.html');
+	res.render('reg',{info:''});
 });
 
 app.get('/arch.html', (req, res) => {
@@ -49,7 +50,7 @@ app.get('/arch.html', (req, res) => {
 });
 
 app.get('/sing_in.html', (req, res) => {
-		res.sendFile(__dirname + '/front/sing_in.html');
+		res.render('sign',{info:''});
 });
 
 app.post('/reg',(req,res) => {
@@ -62,10 +63,10 @@ app.post('/reg',(req,res) => {
 
 		if(doc === null){
 			lp.save();
-			res.sendFile(__dirname + '/front/in_db.html');
+			res.redirect('/sing_in.html');
 		}
 		else{
-			res.sendFile(__dirname + '/front/mong_er.html')
+			res.render('reg',{info:'Пользователь с таким ником уже есть!'})
 		}
 	});
 });
@@ -73,14 +74,14 @@ app.post('/sign',(req,res) => {
 	var sign_query = user.findOne({login:req.body.login},(err,doc) =>{
 		if(err) throw err;
 		if(doc === null){
-			res.sendFile(__dirname + '/front/no_user.html')
+			res.render('sign',{info:'Такого пользователя не существует!'})
 		}
 		else{
 			if(+doc['password'] == +req.body.pass){
 			res.sendFile(__dirname + '/front/hello.html')
 			}
 			else{
-				res.sendFile(__dirname + '/front/badpass.html')
+			    res.render('sign',{info:'Неправильный логин или пароль!'})
 			}
 		}
 		console.log(doc)

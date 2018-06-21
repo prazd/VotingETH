@@ -13,10 +13,17 @@ function call() {
 		});
 		 
 }
-
+/*
 function valid() {
 	var state = $("input[name='dock']:checked").val();
 	if (!state) return $("#messg").html("<font style='color:red'>Укажите документ</font><br />")
 	else alert(state)
 }
+*/
+function check(value){
+	if(value === 'bad'){
+		return $("#messg").html("<font style='color:red'>Такой пользователь уже есть!</font><br />")
+	}
+}
+module.exports = check();
 
