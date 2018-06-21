@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var con = mysql.createConnection({
 	host:'localhost',
-	user:'login',
-	password:'password',
+	user:'prazd',
+	password:'123',
 	database:'back'
 });
 
@@ -64,6 +64,7 @@ app.post('/reg',(req,res) => {
     con.query(sql,(err,result) => {
 		if (err) throw err;
 		console.log('NICE');
+		res.sendFile(__dirname + '/front/in_db.html');
 	    });
 	    };
 	    });
@@ -72,12 +73,20 @@ app.post('/sign',(req,res) => {
 	var check = 'select * from id;'
 	con.query(check,(err,result,fields) => {
 		var a = result;
+		var lol = 0;
 		for(var i=0;i < a.length; i++){
 			if(a[i]['name'] == req.body.login && a[i]['passwd'] == req.body.pass){
 				console.log('YES');
+				lol+=1;
 				break;
-			};
-			};
-			});
-			});
+				}};
+		console.log(lol);
+		if(lol == 0){ 
+     		res.sendFile(__dirname + '/front/error.html')
+		}
+		else if(lol == 1){
+			res.sendFile(__dirname + '/front/in_db.html');
+		};
+		});
+	});
 app.listen(80);
