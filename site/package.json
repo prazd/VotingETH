@@ -4,12 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "sudo node app.js"
+    "start": "node app.js"
   },
   "author": "prazd",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "mongoose": "^5.1.6",
     "mysql": "^2.15.0"
   }
 }

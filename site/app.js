@@ -1,23 +1,29 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const mysql = require('mysql');
+const mongo = require('mongoose');
 const bodyParser = require('body-parser');
 
+app.set('view engine','ejs')
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));//body-parser
 
-var con = mysql.createConnection({
-	host:'localhost',
-	user:'prazd',
-	password:'123',
-	database:'back'
+//connect to mongodb
+mongo.connect('mongodb://localhost/users',(err,db)=>{
+if(err) throw err;
+console.log('connect to mdb')
 });
-
-con.connect(console.log('DB'))
+//Schema
+var Schema = mongo.Schema;
+var userSchema = new Schema({
+    login:String,
+    password:String
+});
+//model
+var user = mongo.model('user',userSchema);
 
 app.get('/',(req, res) => {
 	res.sendFile(__dirname + '/front/main_page.html');
@@ -36,7 +42,7 @@ app.get('/dela.html', (req, res) => {
 });
 
 app.get('/reg.html', (req, res) => {
-	res.sendFile(__dirname + '/front/reg.html');
+	res.render('reg',{info:''});
 });
 
 app.get('/arch.html', (req, res) => {
@@ -44,49 +50,42 @@ app.get('/arch.html', (req, res) => {
 });
 
 app.get('/sing_in.html', (req, res) => {
-		res.sendFile(__dirname + '/front/sing_in.html');
+		res.render('sign',{info:''});
 });
 
 app.post('/reg',(req,res) => {
-	var checkName = 'select name from id;';	
-	con.query(checkName,(err,result,fields) => {
-	var ch = result;
-	var l = 0;
-	for(var c=0; c < ch.length; c++){
-	        if(ch[c]['name'] == req.body.login){
-				   console.log('Уже есть');
-				   l+=1;
-				   break
-        	}
-	     }
-    if(l == 0){
-	var sql = 'insert into id(name,passwd) values(\''+req.body.login+'\',\''+req.body.pass+'\')'
-    con.query(sql,(err,result) => {
-		if (err) throw err;
-		console.log('NICE');
-		res.sendFile(__dirname + '/front/in_db.html');
-	    });
-	    };
-	    });
-	    });
-app.post('/sign',(req,res) => {
-	var check = 'select * from id;'
-	con.query(check,(err,result,fields) => {
-		var a = result;
-		var lol = 0;
-		for(var i=0;i < a.length; i++){
-			if(a[i]['name'] == req.body.login && a[i]['passwd'] == req.body.pass){
-				console.log('YES');
-				lol+=1;
-				break;
-				}};
-		console.log(lol);
-		if(lol == 0){ 
-     		res.sendFile(__dirname + '/front/error.html')
-		}
-		else if(lol == 1){
-			res.sendFile(__dirname + '/front/in_db.html');
-		};
-		});
+	var lp = new user({
+		login:req.body.login,
+		password:req.body.pass
 	});
-app.listen(80);
+	var reg_query = user.findOne({login:req.body.login},(err,doc)=>{
+		if(err) throw err;
+
+		if(doc === null){
+			lp.save();
+			res.redirect('/sing_in.html');
+		}
+		else{
+			res.render('reg',{info:'Пользователь с таким ником уже есть!'})
+		}
+	});
+});
+
+app.post('/sign',(req,res) => {
+	var sign_query = user.findOne({login:req.body.login},(err,doc) =>{
+		if(err) throw err;
+		if(doc === null){
+			res.render('sign',{info:'Такого пользователя не существует!'})
+		}
+		else{
+			if(+doc['password'] == +req.body.pass){
+			res.sendFile(__dirname + '/front/hello.html')
+			}
+			else{
+			    res.render('sign',{info:'Неправильный логин или пароль!'})
+			}
+		}
+		console.log(doc)
+});});
+
+app.listen(8080);
