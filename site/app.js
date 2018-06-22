@@ -12,7 +12,7 @@ app.use(express.static('front/jquery'));
 app.use(bodyParser.urlencoded({ extended: false }));//body-parser
 
 //connect to mongodb
-mongo.connect('mongodb://localhost/users',(err,db)=>{
+mongo.connect('mongodb://mongo:27017/users',(err,db)=>{
 if(err) throw err;
 console.log('connect to mdb')
 });
