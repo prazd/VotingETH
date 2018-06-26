@@ -3,27 +3,24 @@ const path = require('path');
 const app = express();
 const mongo = require('mongoose');
 const bodyParser = require('body-parser');
+const Schema = require('./db/Schema/users')
+const dbc = require('./db/conf')
+const crypt = require('./db/Schema/crypt_user')
 
 app.set('view engine','ejs')
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
 
-app.use(bodyParser.urlencoded({ extended: false }));//body-parser
+app.use(bodyParser.urlencoded({ extended: false }));       //body-parser
 
-//connect to mongodb
-mongo.connect('mongodb://mongo:27017/users',(err,db)=>{
+mongo.connect(dbc.docker,(err,db) =>{
 if(err) throw err;
 console.log('connect to mdb')
 });
-//Schema
-var Schema = mongo.Schema;
-var userSchema = new Schema({
-    login:String,
-    password:String
-});
+
 //model
-var user = mongo.model('user',userSchema);
+var user = mongo.model('user',Schema);
 
 app.get('/',(req, res) => {
 	res.sendFile(__dirname + '/front/main_page.html');
@@ -35,7 +32,7 @@ app.get('/main_page.html',(req, res) => {
 
 app.get('/abt.html', (req, res) => {
 	res.sendFile(__dirname + '/front/abt.html');
-});
+});	 
 
 app.get('/dela.html', (req, res) => {
 	res.sendFile(__dirname + '/front/dela.html');
@@ -60,7 +57,6 @@ app.post('/reg',(req,res) => {
 	});
 	var reg_query = user.findOne({login:req.body.login},(err,doc)=>{
 		if(err) throw err;
-
 		if(doc === null){
 			lp.save();
 			res.redirect('/sing_in.html');
