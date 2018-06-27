@@ -9,36 +9,22 @@ app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
 
+const urls = ['index.html','/','/main_page.html','/abt.html','/dela.html','/arch.html']
 app.use(bodyParser.urlencoded({ extended: false }));       //body-parser
-
-app.get('/',(req, res) => {
-	res.sendFile(__dirname + '/front/main_page.html');
+app.get(urls,(req,res)=>{
+	var url = req.url
+	console.log(url)
+	if(urls.indexOf(url)){
+		res.sendFile(__dirname + '/front'+url)
+	}	
 });
-
-app.get('/main_page.html',(req, res) => {
-	res.sendFile(__dirname + '/front/main_page.html');
-});
-
-app.get('/abt.html', (req, res) => {
-	res.sendFile(__dirname + '/front/abt.html');
-});	 
-
-app.get('/dela.html', (req, res) => {
-	res.sendFile(__dirname + '/front/dela.html');
-});
-
+//sign and reg post/get(render)
 app.get('/reg.html', (req, res) => {
 	res.render('reg',{info:''});
 });
-
-app.get('/arch.html', (req, res) => {
-	res.sendFile(__dirname + '/front/arch.html');
-});
-
 app.get('/sing_in.html', (req, res) => {
 		res.render('sign',{info:''});
 });
-
 app.post('/reg',(req,res)=>{
 	var registration = db.reg(req.body.login,req.body.pass)
 	registration.then((result)=>{
@@ -49,9 +35,7 @@ app.post('/reg',(req,res)=>{
 			res.render('reg',{info:'Пользователь с таким ником уже есть!'})
 		}
 	})
-})
-
-
+});
 app.post('/sign',(req,res)=>{
 	var autorisation = db.sign(req.body.login,req.body.pass)
 	autorisation.then((result)=>{
@@ -65,6 +49,5 @@ app.post('/sign',(req,res)=>{
 			res.render('sign',{info:'Неправильный логин или пароль!'})
 		}
 	})
-})
-
+});
 app.listen(8080);
