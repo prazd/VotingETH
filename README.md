@@ -1,7 +1,6 @@
 # ethereum
-//for training//
+# training
 Голосование в суде(виновен/невиновен)
 
-Вадим - IOT;
-Сергей - front;
-Алексей - back, smart(логика голосования), bot(мониторинг)
+Сергей - front(HTML,CSS,JS);
+Алексей - back(Node.js), smart(Solidity), bot(Python)
