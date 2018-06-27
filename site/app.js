@@ -8,23 +8,24 @@ app.set('view engine','ejs')
 app.use(express.static('front/css'));
 app.use(express.static('front/js'));
 app.use(express.static('front/jquery'));
+app.use(bodyParser.urlencoded({ extended: false }));           //body-parser
 
 const urls = ['index.html','/','/main_page.html','/abt.html','/dela.html','/arch.html']
-app.use(bodyParser.urlencoded({ extended: false }));       //body-parser
+const ejs_res = {'/reg.html':'reg','/sing_in.html':'sign'}
+const ejs_req = ['/reg.html','/sing_in.html']
+
+//html
 app.get(urls,(req,res)=>{
-	var url = req.url
-	console.log(url)
-	if(urls.indexOf(url)){
-		res.sendFile(__dirname + '/front'+url)
+	if(urls.indexOf(req.url)){
+		res.sendFile(__dirname + '/front'+req.url)
 	}	
 });
-//sign and reg post/get(render)
-app.get('/reg.html', (req, res) => {
-	res.render('reg',{info:''});
+
+//ejs
+app.get(ejs_req,(req,res)=>{
+	res.render(ejs_res[req.url],{info:''});
 });
-app.get('/sing_in.html', (req, res) => {
-		res.render('sign',{info:''});
-});
+
 app.post('/reg',(req,res)=>{
 	var registration = db.reg(req.body.login,req.body.pass)
 	registration.then((result)=>{
@@ -36,6 +37,7 @@ app.post('/reg',(req,res)=>{
 		}
 	})
 });
+
 app.post('/sign',(req,res)=>{
 	var autorisation = db.sign(req.body.login,req.body.pass)
 	autorisation.then((result)=>{

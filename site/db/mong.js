@@ -1,7 +1,7 @@
 var mongo = require('mongoose')
 var Schema = require('./Schema/users')
 var dbc = require('./conf')
-mongo.connect(dbc.local,(err,db) =>{
+mongo.connect(dbc.docker,(err,db) =>{
     if(err) throw err;
     });
 var user = mongo.model('user',Schema);
