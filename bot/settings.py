@@ -1,7 +1,8 @@
 import telebot
 import web3
+import os
 
-bot = telebot.TeleBot('***')
+bot = telebot.TeleBot(os.environ['token'])
 web = web3.Web3(web3.Web3.HTTPProvider('http://127.0.0.1:8545'))
 
 abi = [
