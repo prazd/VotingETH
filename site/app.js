@@ -26,30 +26,26 @@ app.get(ejs_req,(req,res)=>{
 	res.render(ejs_res[req.url],{info:''});
 });
 
+//registration
 app.post('/reg',(req,res)=>{
-	var registration = db.reg(req.body.login,req.body.pass)
-	registration.then((result)=>{
-		if(result.length===0){
-			res.redirect('/sing_in.html');
-		}
-		else{
-			res.render('reg',{info:'Пользователь с таким ником уже есть!'})
-		}
-	})
+	let registration = db.reg(req.body.login,req.body.pass);
+	registration
+	       .then(()=>{
+			   res.redirect('/sing_in.html');
+		   }).catch((err)=>{
+			   res.render('reg',{info:err});
+		   });
 });
 
+//sign in
 app.post('/sign',(req,res)=>{
-	var autorisation = db.sign(req.body.login,req.body.pass)
-	autorisation.then((result)=>{
-		if(result.length===0){
-			res.render('sign',{info:'Такого пользователя не существует!'})
-		}
-		else if(+result[0]['password']== +req.body.pass){
-			res.sendFile(__dirname + '/front/hello.html')
-		}
-		else{
-			res.render('sign',{info:'Неправильный логин или пароль!'})
-		}
-	})
-});
+	let autorisation = db.sign(req.body.login,req.body.pass)
+	autorisation
+	      .then(()=>{
+			  res.sendFile(__dirname+'/front/hello.html')
+		  }).catch((err)=>{
+			  res.render('sign',{info:err});
+		  })
+})
+
 app.listen(8080);

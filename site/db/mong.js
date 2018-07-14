@@ -1,28 +1,42 @@
 var mongo = require('mongoose')
 var Schema = require('./Schema/users')
 var dbc = require('./conf')
-mongo.connect(dbc.local,(err,db) =>{
+mongo.connect(dbc.docker,(err,db) =>{ //docker or local
     if(err) throw err;
     });
 var user = mongo.model('user',Schema);
 
-async function reg(log,pas) {
-    var lp = new user({
-        login:log,
-        password:pas
+function reg(log,pas){
+    return new Promise((resolve,reject)=>{
+        var lp = new user({
+            login:log,
+            password:pas
+        });
+        user.find({login:log},(err,doc)=>{
+            if(err) throw err;
+            if(doc.length===0){
+                lp.save();
+                resolve();
+            }
+            else{reject('Такой пользователь уже есть!')}
+        });
     });
-    return await user.find({login:log},(err,doc)=>{
-        if(err) throw err;
-        if(doc.length===0){
-            lp.save()
-        }
-    })
-    ;}
-
-async function sign(log,pas){
-    return await user.find({login:log},(err,doc) =>{
-		if(err) throw err;
 }
-)}
+
+function sign(log,pas){
+    return new Promise((resolve,reject)=>{
+        user.find({login:log},(err,doc)=>{
+            if(doc.length===0){
+                reject('Такого пользователя не существует');
+            }
+            else if(+doc[0].password === +pas){
+                resolve();
+            }
+            else{
+                reject('Неправильный логин или пароль!!!!!');
+            }
+        });
+    });
+}
 module.exports.reg = reg;
 module.exports.sign = sign;
